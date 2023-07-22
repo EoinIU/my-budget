@@ -1,0 +1,62 @@
+<h2>Welcome to your Budget</h2>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+            <table id="budgetTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Frequency</th>
+            <th>Income</th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let incomeEntry of incomeEntries; let i = index">
+            <td>{{incomeEntry.description}}</td>
+            <td></td>
+            <td>{{incomeEntry.income}}</td>
+            
+
+        </tr>
+        
+        <tr>
+            
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-success">Add income</button></td>
+        </tr>
+    </tbody>
+            </table>
+        </div>
+    
+      <div class="col-md-6">
+            <table id="budgetTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Frequency</th>
+            <th>Expense</th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let expenseEntry of expenseEntries;">
+            <td>{{expenseEntry.description}}</td>
+            <td></td>
+            <td>{{expenseEntry.expense}}</td>
+            
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><button type="button" class="btn btn-danger">Add Expense</button></td>
+            
+        </tr>
+    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
