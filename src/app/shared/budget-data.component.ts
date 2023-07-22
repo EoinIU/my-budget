@@ -10,13 +10,11 @@ export class BudgetDataService {
 
   incomeEntries: IncomeEntry[] = [
     new IncomeEntry("500", "50", "Wages"),
-    // Add more initial income entries if needed
   ];
 
   expenseEntries: ExpenseEntry[] = [
     new ExpenseEntry("40", "50", "Phone bill"),
     new ExpenseEntry("40", "50", "Groceries"),
-    // Add more initial expense entries if needed
   ];
 
   incomeDelete(index: number) {
@@ -27,5 +25,15 @@ export class BudgetDataService {
   expenseDelete(index: number) {
     this.expenseEntries.splice(index, 1);
     this.expenseSubject.next(this.expenseEntries);
+  }
+
+  onAddIncomeEntry (incomeEntry: IncomeEntry) {
+    this.incomeEntries.push (incomeEntry) ;
+    this.incomeSubject.next(this.incomeEntries)
+  }
+
+  onAddExpenseEntry (expenseEntry: ExpenseEntry) {
+    this.expenseEntries.push (expenseEntry) ;
+    this.expenseSubject.next(this.expenseEntries)
   }
 }

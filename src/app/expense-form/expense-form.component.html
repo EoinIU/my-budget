@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="onSubmit()"[formGroup]="expenseForm">
+            <div class="form-group">
+                <label for="expenseDescription">Description</label>
+                <input type="text" class="form-control" formControlName="expenseDescription">
+                <label for="expenseValue">Value</label>
+                <input type="text" class="form-control" formControlName="expenseValue">
+                <label for="expenseFrequency">Frequency</label>
+                <select class="form-select" formControlName="expenseFrequency">
+                    <option value="" disabled selected>Select...</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="weekly">Fortnightly</option>
+                    <option value="weekly">Four Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+    </div>
+</div>
