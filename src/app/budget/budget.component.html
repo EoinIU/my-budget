@@ -2,60 +2,54 @@
 <div class="container">
     <div class="row">
       <div class="col-md-6">
-            <table id="budgetTable" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Description</th>
-            <th>Frequency</th>
-            <th>Income</th>
-            
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let incomeEntry of incomeEntries; let i = index">
-            <td>{{incomeEntry.description}}</td>
-            <td></td>
-            <td>{{incomeEntry.income}}</td>
-            
+            <table id="incomeTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Income</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>    
 
-        </tr>
+                <tbody>
+                    <tr *ngFor="let incomeEntry of incomeEntries; let i = index">
+                        <td>{{incomeEntry.description}}</td>
+                        <td>{{incomeEntry.income}}</td>
+                        <td><button type="button" class="btn btn-outline-primary">Edit</button><button (click)="incomeDelete(i)" type="button" class="btn btn-outline-danger">Delete</button></td>
+                    </tr>
         
-        <tr>
-            
-            <td></td>
-            <td></td>
-            <td><button type="button" class="btn btn-success">Add income</button></td>
-        </tr>
-    </tbody>
+                    <tr>
+                        <td></td>
+                        <td><button type="button" class="btn btn-success">Add income</button></td>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     
       <div class="col-md-6">
-            <table id="budgetTable" class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Description</th>
-            <th>Frequency</th>
-            <th>Expense</th>
-            
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let expenseEntry of expenseEntries;">
-            <td>{{expenseEntry.description}}</td>
-            <td></td>
-            <td>{{expenseEntry.expense}}</td>
-            
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td><button type="button" class="btn btn-danger">Add Expense</button></td>
-            
-        </tr>
-    </tbody>
+            <table id="expenseTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Expense</th>
+                        <th>Action</th>
+                    </tr>  
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let expenseEntry of expenseEntries; let k = index">
+                        <td>{{expenseEntry.description}}</td>
+                        <td>{{expenseEntry.expense}}</td>
+                        <td><button type="button" class="btn btn-outline-primary">Edit</button><button (click)="expenseDelete(k)" type="button" class="btn btn-outline-danger">Delete</button></td>    
+                    </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+   
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
