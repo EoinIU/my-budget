@@ -1,64 +1,95 @@
+<!-- This is the heading for the page, welcoming the user to their budget. -->
 <h2>Welcome to your Budget</h2>
+
+<!-- The main container div that holds the budget-related content. -->
 <div class="container">
+
+    <!-- This div creates a row to display two columns side by side. -->
     <div class="row">
-      <div class="col-md-6">
+
+        <!-- The first column, dedicated to displaying income-related information. -->
+        <div class="col-md-6">
+
+            <!-- A flexbox container to align the heading and the "Add Income" button. -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- The heading for the income section. -->
+                <h3 class="float-left">Income</h3>
+
+                <!-- The "Add Income" button, which navigates to the "income-entry" route. -->
+                <a routerLink="income-entry">
+                    <button type="button" class="btn btn-success">Add Income</button>
+                </a>
+            </div>
+
+            <!-- A table to display the list of income entries. -->
             <table id="incomeTable" class="table table-bordered">
                 <thead>
+                    <!-- Table header row with column names. -->
                     <tr>
                         <th>Description</th>
                         <th>Income</th>
                         <th>Action</th>
                     </tr>
-                </thead>    
+                </thead>
 
                 <tbody>
+                    <!-- Using Angular's *ngFor directive to loop through incomeEntries and display each entry. -->
                     <tr *ngFor="let incomeEntry of incomeEntries; let i = index">
+                        <!-- Displaying the income description for the current entry. -->
                         <td>{{incomeEntry.incomeDescription}}</td>
+                        <!-- Displaying the income value for the current entry. -->
                         <td>{{incomeEntry.incomeValue}}</td>
-                        <td><button (click)="incomeEdit(i)" type="button" class="btn btn-outline-primary">Edit</button>
+                        <!-- Buttons for editing and deleting the current income entry. -->
+                        <td>
+                            <!-- The "Edit" button, which calls the incomeEdit() method with the index i. -->
+                            <button (click)="incomeEdit(i)" type="button" class="btn btn-outline-primary">Edit</button>
+                            <!-- The "Delete" button, which calls the incomeDelete() method with the index i. -->
                             <button (click)="incomeDelete(i)" type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
-                    </tr>
-        
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a routerLink="income-entry">
-                              <button type="button" class="btn btn-success">Add Income</button>
-                            </a>
-                        </td>
-                                                  
                     </tr>
                 </tbody>
             </table>
         </div>
-    
-      <div class="col-md-6">
+
+        <!-- The second column, dedicated to displaying expense-related information. -->
+        <div class="col-md-6">
+
+            <!-- A flexbox container to align the heading and the "Add Expense" button. -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- The heading for the expense section. -->
+                <h3 class="float-left">Expenses</h3>
+
+                <!-- The "Add Expense" button, which navigates to the "expense-entry" route. -->
+                <a routerLink="expense-entry">
+                    <button type="button" class="btn btn-danger">Add Expense</button>
+                </a>
+            </div>
+
+            <!-- A table to display the list of expense entries. -->
             <table id="expenseTable" class="table table-bordered">
                 <thead>
+                    <!-- Table header row with column names. -->
                     <tr>
                         <th>Description</th>
                         <th>Expense</th>
                         <th>Action</th>
-                    </tr>  
+                    </tr>
                 </thead>
 
                 <tbody>
+                    <!-- Using Angular's *ngFor directive to loop through expenseEntries and display each entry. -->
                     <tr *ngFor="let expenseEntry of expenseEntries; let k = index">
+                        <!-- Displaying the expense description for the current entry. -->
                         <td>{{expenseEntry.expenseDescription}}</td>
+                        <!-- Displaying the expense value for the current entry. -->
                         <td>{{expenseEntry.expenseValue}}</td>
-                        <td><button (click)="expenseEdit(k)"type="button" class="btn btn-outline-primary">Edit</button>
+                        <!-- Buttons for editing and deleting the current expense entry. -->
+                        <td>
+                            <!-- The "Edit" button, which calls the expenseEdit() method with the index k. -->
+                            <button (click)="expenseEdit(k)" type="button" class="btn btn-outline-primary">Edit</button>
+                            <!-- The "Delete" button, which calls the expenseDelete() method with the index k. -->
                             <button (click)="expenseDelete(k)" type="button" class="btn btn-outline-danger">Delete</button>
-                        </td>    
-                    </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td><a routerLink="expense-entry">
-                            <button type="button" class="btn btn-danger">Add Expense</button>
-                          </a></td>
-   
+                        </td>
                     </tr>
                 </tbody>
             </table>

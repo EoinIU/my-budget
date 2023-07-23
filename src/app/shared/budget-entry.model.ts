@@ -1,16 +1,17 @@
-
-
+// Annotation for the "IncomeEntry" class
 export class IncomeEntry {
   constructor(
-    public incomeValue: string,
-    public incomeFrequency: string,
-    public incomeDescription: string
+    public incomeValue: string,        // Property to store the value of the income entry (e.g., "500")
+    public incomeFrequency: string,   // Property to store the frequency of the income entry (e.g., "Weekly")
+    public incomeDescription: string  // Property to store the description of the income entry (e.g., "Wages")
   ) {}
 }
+
+// Annotation for the "ExpenseEntry" class
 export class ExpenseEntry {
   constructor(
-    public expenseValue: string,
-    public expenseFrequency: string,
-    public expenseDescription: string
+    public expenseValue: string,        // Property to store the value of the expense entry (e.g., "40")
+    public expenseFrequency: string,   // Property to store the frequency of the expense entry (e.g., "Monthly")
+    public expenseDescription: string  // Property to store the description of the expense entry (e.g., "Phone bill")
   ) {}
 }
