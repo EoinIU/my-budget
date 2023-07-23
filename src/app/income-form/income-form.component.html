@@ -6,7 +6,11 @@
                 <input type="text" class="form-control" formControlName="incomeDescription">
                 <label for="incomeValue">Value</label>
                 <input type="text" class="form-control" formControlName="incomeValue">
-                <label for="incomeFrequency">Frequency</label>
+                <label for="incomeFrequency">Income Frequency</label>
+                <select id="incomeFrequency" formControlName="incomeFrequency" class="form-control">
+                    <option *ngFor="let frequency of frequencyOptions" [value]="frequency">{{ frequency }}</option>
+                </select>
+                <!-- <label for="incomeFrequency">Frequency</label>
                 <select class="form-select" formControlName="incomeFrequency">
                     <option value="" disabled selected>Select...</option>
                     <option value="daily">Daily</option>
@@ -15,9 +19,9 @@
                     <option value="weekly">Four Weekly</option>
                     <option value="monthly">Monthly</option>
                     <option value="yearly">Yearly</option>
-                </select>
+                </select> -->
             </div>
-            <button class="btn btn-success">Submit</button>
+            <button [disabled]="!incomeForm.valid" class="btn btn-success">Submit</button>
         </form>
     </div>
 </div>

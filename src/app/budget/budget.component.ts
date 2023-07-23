@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ExpenseEntry, IncomeEntry } from '../shared/budget-entry.model';
 import { BudgetDataService } from '../shared/budget-data.component';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budget',
@@ -15,7 +16,7 @@ export class BudgetComponent implements OnInit, OnDestroy {
   expenseEntries: ExpenseEntry[] = [];
   expenseSubscription: Subscription = new Subscription();
 
-  constructor(private budgetDataService: BudgetDataService) { }
+  constructor(private budgetDataService: BudgetDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.incomeSubscription = this.budgetDataService.incomeSubject.subscribe(incomeEntries => {
@@ -41,5 +42,21 @@ export class BudgetComponent implements OnInit, OnDestroy {
 
   expenseDelete(index: number) {
     this.budgetDataService.expenseDelete(index);
+  }
+
+  incomeEdit (index: number){
+    this. router.navigate (["incomeEdit", index]);
+  }
+
+  getIncomeEntry(index: number){
+    return {...this.incomeEntries [index]}
+  }
+
+  expenseEdit (index: number){
+    this. router.navigate (["expenseEdit", index]);
+  }
+  
+  getExpenseEntry(index: number){
+    return {...this.expenseEntries [index]}
   }
 }

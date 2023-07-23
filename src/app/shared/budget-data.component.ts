@@ -5,16 +5,18 @@ import { Subject } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class BudgetDataService {
 
+  
+
   incomeSubject = new Subject<IncomeEntry[]>();
   expenseSubject = new Subject<ExpenseEntry[]>();
 
   incomeEntries: IncomeEntry[] = [
-    new IncomeEntry("500", "50", "Wages"),
+    new IncomeEntry("500", "Weekly", "Wages"),
   ];
 
   expenseEntries: ExpenseEntry[] = [
-    new ExpenseEntry("40", "50", "Phone bill"),
-    new ExpenseEntry("40", "50", "Groceries"),
+    new ExpenseEntry("40", "Monthly", "Phone bill"),
+    new ExpenseEntry("40", "Monthly", "Groceries"),
   ];
 
   incomeDelete(index: number) {
@@ -30,10 +32,28 @@ export class BudgetDataService {
   onAddIncomeEntry (incomeEntry: IncomeEntry) {
     this.incomeEntries.push (incomeEntry) ;
     this.incomeSubject.next(this.incomeEntries)
+    console.log('Income Entries:', this.incomeEntries);
   }
 
   onAddExpenseEntry (expenseEntry: ExpenseEntry) {
     this.expenseEntries.push (expenseEntry) ;
     this.expenseSubject.next(this.expenseEntries)
+    console.log('Expense Entries:', this.expenseEntries);
+  } 
+
+  getIncomeEntry(index: number){
+    return {...this.incomeEntries [index]}
+  }
+  getExpenseEntry(index: number){
+    return {...this.expenseEntries [index]}
+  }
+  
+  onUpdateIncomeEntry(paramId: number, newEntry: IncomeEntry) {
+    this.incomeEntries [paramId] = newEntry;
+    this.incomeSubject.next (this.incomeEntries) ;
+  }
+  onUpdateExpenseEntry(paramId: number, newEntry: ExpenseEntry) {
+    this.expenseEntries [paramId] = newEntry;
+    this.expenseSubject.next (this.expenseEntries) ;
   }
 }

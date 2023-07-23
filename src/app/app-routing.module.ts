@@ -7,7 +7,9 @@ import { ExpenseFormComponent } from './expense-form/expense-form.component';
 const routes: Routes = [
   {path:"", component: BudgetComponent},
   {path: "income-entry", component: IncomeFormComponent},
-  {path: "expense-entry", component: ExpenseFormComponent}
+  {path: "expense-entry", component: ExpenseFormComponent},
+  {path:"incomeEdit/:id", component: IncomeFormComponent},
+  {path:"expenseEdit/:id", component: ExpenseFormComponent}
 ];
 
 @NgModule({
