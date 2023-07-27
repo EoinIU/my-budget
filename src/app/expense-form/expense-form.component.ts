@@ -56,6 +56,7 @@ export class ExpenseFormComponent implements OnInit {
   onSubmit() {
     // Creating a new ExpenseEntry object with the form values
     const newEntry = new ExpenseEntry(
+      1,
       this.expenseForm.value.expenseValue,
       this.expenseForm.value.expenseFrequency,
       this.expenseForm.value.expenseDescription
@@ -64,6 +65,7 @@ export class ExpenseFormComponent implements OnInit {
     // Checking if the form is in edit mode
     if (this.editMode) {
       // If in edit mode, update the existing expense entry using onUpdateExpenseEntry method in BudgetDataService
+      newEntry.id = +this.paramId;
       this.budgetDataService.onUpdateExpenseEntry(this.paramId, newEntry);
     } else {
       // If not in edit mode, add a new expense entry using onAddExpenseEntry method in BudgetDataService

@@ -28,19 +28,21 @@ export class BudgetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Subscribing to the income data stream using BehaviorSubject in BudgetDataService
     // Whenever there is a change in income entries, this callback will update the component's incomeEntries
+    this.budgetDataService.getIncomeEntries();
     this.incomeSubscription = this.budgetDataService.incomeSubject.subscribe(incomeEntries => {
       this.incomeEntries = incomeEntries;
     });
 
     // Subscribing to the expense data stream using BehaviorSubject in BudgetDataService
     // Whenever there is a change in expense entries, this callback will update the component's expenseEntries
+    this.budgetDataService.getExpenseEntries();
     this.expenseSubscription = this.budgetDataService.expenseSubject.subscribe(expenseEntries => {
       this.expenseEntries = expenseEntries;
     });
 
     // Initializing the incomeEntries and expenseEntries arrays with the initial data from the service
-    this.expenseEntries = this.budgetDataService.expenseEntries;
     this.incomeEntries = this.budgetDataService.incomeEntries;
+    this.expenseEntries = this.budgetDataService.expenseEntries;
   }
 
   // Lifecycle hook: Runs when the component is destroyed

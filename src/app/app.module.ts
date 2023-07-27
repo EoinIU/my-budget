@@ -8,6 +8,7 @@ import { BudgetComponent } from './budget/budget.component';
 import { IncomeFormComponent } from './income-form/income-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ExpenseFormComponent } from './expense-form/expense-form.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -56,6 +56,7 @@ export class IncomeFormComponent implements OnInit {
   onSubmit() {
     // Creating a new IncomeEntry object with the form values
     const newEntry = new IncomeEntry(
+      1,
       this.incomeForm.value.incomeValue,
       this.incomeForm.value.incomeFrequency,
       this.incomeForm.value.incomeDescription
@@ -63,6 +64,7 @@ export class IncomeFormComponent implements OnInit {
 
     // Checking if the form is in edit mode
     if (this.editMode) {
+      newEntry.id = +this.paramId;
       // If in edit mode, update the existing income entry using onUpdateIncomeEntry method in BudgetDataService
       this.budgetDataService.onUpdateIncomeEntry(this.paramId, newEntry);
     } else {

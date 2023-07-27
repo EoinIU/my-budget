@@ -42,9 +42,9 @@
                         <!-- Buttons for editing and deleting the current income entry. -->
                         <td>
                             <!-- The "Edit" button, which calls the incomeEdit() method with the index i. -->
-                            <button (click)="incomeEdit(i)" type="button" class="btn btn-outline-primary">Edit</button>
+                            <button (click)="incomeEdit(incomeEntry.id)" type="button" class="btn btn-outline-primary">Edit</button>
                             <!-- The "Delete" button, which calls the incomeDelete() method with the index i. -->
-                            <button (click)="incomeDelete(i)" type="button" class="btn btn-outline-danger">Delete</button>
+                            <button (click)="incomeDelete(incomeEntry.id)" type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -86,9 +86,9 @@
                         <!-- Buttons for editing and deleting the current expense entry. -->
                         <td>
                             <!-- The "Edit" button, which calls the expenseEdit() method with the index k. -->
-                            <button (click)="expenseEdit(k)" type="button" class="btn btn-outline-primary">Edit</button>
+                            <button (click)="expenseEdit(expenseEntry.id)" type="button" class="btn btn-outline-primary">Edit</button>
                             <!-- The "Delete" button, which calls the expenseDelete() method with the index k. -->
-                            <button (click)="expenseDelete(k)" type="button" class="btn btn-outline-danger">Delete</button>
+                            <button (click)="expenseDelete(expenseEntry.id)" type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
                     </tr>
                 </tbody>
