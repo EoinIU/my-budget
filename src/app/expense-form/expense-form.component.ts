@@ -54,8 +54,10 @@ export class ExpenseFormComponent implements OnInit {
 
   // Method called when the form is submitted
   onSubmit() {
+    // Declaring new property to hold yearly expense value
     let expenseYearlyVar: number = 0;
 
+    // if statement to determine what the frequency selected by the user is and calculating the yearly equivalent of the income
     if (this.expenseForm.value.expenseFrequency === "Weekly") {
       expenseYearlyVar = (this.expenseForm.value.expenseValue)*52;
       console.log("Weekly income");

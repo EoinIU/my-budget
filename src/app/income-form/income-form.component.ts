@@ -54,8 +54,10 @@ export class IncomeFormComponent implements OnInit {
 
   // Method called when the form is submitted
   onSubmit() {
+    // Declaring new property to hold yearly income value
     let incomeYearlyVar: number = 0;
 
+    // if statement to determine what the frequency selected by the user is and calculating the yearly equivalent of the income
     if (this.incomeForm.value.incomeFrequency === "Weekly") {
       incomeYearlyVar = (this.incomeForm.value.incomeValue)*52;
       console.log("Weekly income");
