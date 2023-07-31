@@ -48,19 +48,38 @@ export class IncomeFormComponent implements OnInit {
     this.incomeForm = new FormGroup({
       "incomeDescription": new FormControl(this.editMode ? this.incomeEntry.incomeDescription : null, [Validators.required]),
       "incomeValue": new FormControl(this.editMode ? this.incomeEntry.incomeValue : null, [Validators.required]),
-      "incomeFrequency": new FormControl(this.editMode ? this.incomeEntry.incomeFrequency : null)
+      "incomeFrequency": new FormControl(this.editMode ? this.incomeEntry.incomeFrequency : "Weekly")
     });
   }
 
   // Method called when the form is submitted
   onSubmit() {
+    let incomeYearlyVar: number = 0;
+
+    if (this.incomeForm.value.incomeFrequency === "Weekly") {
+      incomeYearlyVar = (this.incomeForm.value.incomeValue)*52;
+      console.log("Weekly income");
+    } else if (this.incomeForm.value.incomeFrequency === "Fortnightly") {
+      incomeYearlyVar = (this.incomeForm.value.incomeValue)*26;
+      console.log("Fortnightly income");
+    } else if (this.incomeForm.value.incomeFrequency === "Four-weekly") {
+      incomeYearlyVar = (this.incomeForm.value.incomeValue)*13;
+      console.log("Four-weekly income");
+    } else if (this.incomeForm.value.incomeFrequency === "Monthly") {
+      incomeYearlyVar = (this.incomeForm.value.incomeValue)*12;
+      console.log("Monthly income");
+    } else if (this.incomeForm.value.incomeFrequency === "Yearly") {
+      incomeYearlyVar = (this.incomeForm.value.incomeValue)*1;
+      console.log("Yearly income");
+    };
     // Creating a new IncomeEntry object with the form values
     const newEntry = new IncomeEntry(
       1,
       this.incomeForm.value.incomeValue,
       this.incomeForm.value.incomeFrequency,
-      this.incomeForm.value.incomeDescription
-    );
+      this.incomeForm.value.incomeDescription,
+      incomeYearlyVar
+    )
 
     // Checking if the form is in edit mode
     if (this.editMode) {

@@ -16,8 +16,8 @@ import {HttpClientModule} from '@angular/common/http';
     HeaderComponent,
     BudgetComponent,
     IncomeFormComponent,
-    ExpenseFormComponent
-  ],
+    ExpenseFormComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

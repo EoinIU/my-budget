@@ -9,12 +9,12 @@ const app = express();
 
 // Sample data for income entries.
 const incomeEntries = [
-    { id: 1, incomeValue: "1000", incomeFrequency: "Weekly", incomeDescription: "OF" }
+    { id: 1, incomeValue: "1000", incomeFrequency: "Weekly", incomeDescription: "OF", incomeYearly: 12000 }
 ];
 
 // Sample data for expense entries.
 const expenseEntries = [
-    { id: 1, expenseValue: "20", Frequency: "Monthly", expenseDescription: "Phone Bill" },
+    { id: 1, expenseValue: "20", expenseFrequency: "Monthly", expenseDescription: "Phone Bill" },
     { id: 2, expenseValue: "50", expenseFrequency: "Weekly", expenseDescription: "Groceries" }
 ];
 

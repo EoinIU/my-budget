@@ -1,8 +1,46 @@
 <!-- This is the heading for the page, welcoming the user to their budget. -->
-<h2>Welcome to your Budget</h2>
+<div class="container mt-3">
+    <h2>Welcome to your Budget</h2>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <h4>Summary Period</h4>
+        <hr>
+        <div class="form-group">
+          <label for="selectPeriod">Select Period:</label>
+          <select class="form-control" id="selectPeriod">
+            <option value="weekly">Weekly</option>
+            <option value="fortnightly">Fortnightly</option>
+            <option value="four-weekly">Four-weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <h4>Income and Expenses Summary</h4>
+        <hr>
+        <div class="form-group">
+          <label for="totalIncome">Total Income:</label>
+          <input type="text" class="form-control" id="totalIncome" readonly>
+        </div>
+        <div class="form-group">
+          <label for="totalExpenses">Total Expenses:</label>
+          <input type="text" class="form-control" id="totalExpenses" readonly>
+        </div>
+        <div class="form-group">
+          <label for="totalDisposableIncome">Disposable Income:</label>
+          <input type="text" class="form-control" id="totalDisposableIncome" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
 <!-- The main container div that holds the budget-related content. -->
-<div class="container">
+<div class="container mt-5">
 
     <!-- This div creates a row to display two columns side by side. -->
     <div class="row">
@@ -28,6 +66,7 @@
                     <tr>
                         <th>Description</th>
                         <th>Income</th>
+                        <th>Frequency</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,7 +77,9 @@
                         <!-- Displaying the income description for the current entry. -->
                         <td>{{incomeEntry.incomeDescription}}</td>
                         <!-- Displaying the income value for the current entry. -->
-                        <td>{{incomeEntry.incomeValue}}</td>
+                        <td>€{{incomeEntry.incomeValue}}</td>
+                        <!-- Displaying the income frequency for the current entry. -->
+                        <td>{{incomeEntry.incomeFrequency}}</td>
                         <!-- Buttons for editing and deleting the current income entry. -->
                         <td>
                             <!-- The "Edit" button, which calls the incomeEdit() method with the index i. -->
@@ -72,6 +113,7 @@
                     <tr>
                         <th>Description</th>
                         <th>Expense</th>
+                        <th>Frequency</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -82,7 +124,9 @@
                         <!-- Displaying the expense description for the current entry. -->
                         <td>{{expenseEntry.expenseDescription}}</td>
                         <!-- Displaying the expense value for the current entry. -->
-                        <td>{{expenseEntry.expenseValue}}</td>
+                        <td>€{{expenseEntry.expenseValue}}</td>
+                         <!-- Displaying the income frequency for the current entry. -->
+                         <td>{{expenseEntry.expenseFrequency}}</td>
                         <!-- Buttons for editing and deleting the current expense entry. -->
                         <td>
                             <!-- The "Edit" button, which calls the expenseEdit() method with the index k. -->

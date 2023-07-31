@@ -4,7 +4,8 @@ export class IncomeEntry {
     public id: number,                  // Property to store the ID of the income entry (e.g., 1)
     public incomeValue: string,         // Property to store the value of the income entry (e.g., "500")
     public incomeFrequency: string,    // Property to store the frequency of the income entry (e.g., "Weekly")
-    public incomeDescription: string   // Property to store the description of the income entry (e.g., "Wages")
+    public incomeDescription: string,   // Property to store the description of the income entry (e.g., "Wages")
+    public incomeYearly: number
   ) {}
 }
 
@@ -14,6 +15,7 @@ export class ExpenseEntry {
     public id: number,                  // Property to store the ID of the expense entry (e.g., 1)
     public expenseValue: string,        // Property to store the value of the expense entry (e.g., "40")
     public expenseFrequency: string,   // Property to store the frequency of the expense entry (e.g., "Monthly")
-    public expenseDescription: string  // Property to store the description of the expense entry (e.g., "Phone bill")
+    public expenseDescription: string,  // Property to store the description of the expense entry (e.g., "Phone bill")
+    public expenseYearly: number
   ) {}
 }

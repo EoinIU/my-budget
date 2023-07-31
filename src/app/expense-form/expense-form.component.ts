@@ -54,12 +54,31 @@ export class ExpenseFormComponent implements OnInit {
 
   // Method called when the form is submitted
   onSubmit() {
+    let expenseYearlyVar: number = 0;
+
+    if (this.expenseForm.value.expenseFrequency === "Weekly") {
+      expenseYearlyVar = (this.expenseForm.value.expenseValue)*52;
+      console.log("Weekly income");
+    } else if (this.expenseForm.value.expenseFrequency === "Fortnightly") {
+      expenseYearlyVar = (this.expenseForm.value.expenseValue)*26;
+      console.log("Fortnightly income");
+    } else if (this.expenseForm.value.expenseFrequency === "Four-weekly") {
+      expenseYearlyVar = (this.expenseForm.value.expenseValue)*13;
+      console.log("Four-weekly income");
+    } else if (this.expenseForm.value.expenseFrequency === "Monthly") {
+      expenseYearlyVar = (this.expenseForm.value.expenseValue)*12;
+      console.log("Monthly income");
+    } else if (this.expenseForm.value.expenseFrequency === "Yearly") {
+      expenseYearlyVar = (this.expenseForm.value.expenseValue)*1;
+      console.log("Yearly income");
+    };
     // Creating a new ExpenseEntry object with the form values
     const newEntry = new ExpenseEntry(
       1,
       this.expenseForm.value.expenseValue,
       this.expenseForm.value.expenseFrequency,
-      this.expenseForm.value.expenseDescription
+      this.expenseForm.value.expenseDescription,
+      expenseYearlyVar
     );
 
     // Checking if the form is in edit mode
