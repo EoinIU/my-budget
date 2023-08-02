@@ -3,42 +3,53 @@
     <h2>Welcome to your Budget</h2>
 </div>
 
+<!-- A container-->
 <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-6 mt-3">
-        <h4>Summary Period</h4>
-        <hr>
-        <div class="form-group">
-          <label for="selectPeriod">Select Period:</label>
-          <select class="form-control" id="selectPeriod">
+    <h2>Summary</h2>
+    <div class="col-md-2 mt-3 mb-3"><label for="selectPeriod">Select Period:</label>
+        <select class="form-control" id="selectPeriod">
             <option value="weekly">Weekly</option>
             <option value="fortnightly">Fortnightly</option>
             <option value="four-weekly">Four-weekly</option>
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>
-        </div>
-      </div>
-      <div class="col-md-6 mt-3">
-        <h4>Income and Expenses Summary</h4>
-        <hr>
-        <div class="form-group">
-          <label for="totalIncome">Total Income:</label>
-          <input type="text" class="form-control" id="totalIncome" readonly>
-        </div>
-        <div class="form-group">
-          <label for="totalExpenses">Total Expenses:</label>
-          <input type="text" class="form-control" id="totalExpenses" readonly>
-        </div>
-        <div class="form-group">
-          <label for="totalDisposableIncome">Disposable Income:</label>
-          <input type="text" class="form-control" id="totalDisposableIncome" readonly>
-        </div>
-      </div>
     </div>
-  </div>
-  
-
+    
+    <!-- This div creates a row to display Totals side by side. -->
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr class="d-flex justify-content-between align-items-center mb-3">
+                        <td class="text-success float-left"><b>Total Income:</b></td>
+                        <td class="float-right">€{{budgetDataService.totalYearlyIncome}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr class="d-flex justify-content-between align-items-center mb-3">
+                        <td class="text-danger float-left"><b>Total Expenses:</b></td>
+                        <td class="float-right">€{{budgetDataService.totalYearlyExpense}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr class="d-flex justify-content-between align-items-center mb-3">
+                        <td class="text-primary float-left"><b>Disposable Income:</b></td>
+                        <td class="float-right">€{{budgetDataService.totalYearlyIncome - budgetDataService.totalYearlyExpense}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <!-- The main container div that holds the budget-related content. -->
 <div class="container mt-5">
 

@@ -1,8 +1,8 @@
 // Importing required modules and components
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ExpenseEntry, IncomeEntry } from '../shared/budget-entry.model';
 import { BudgetDataService } from '../shared/budget-data.component';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 // Defining the component metadata
@@ -11,6 +11,11 @@ import { Router } from '@angular/router';
   templateUrl: './budget.component.html',
   styleUrls: ['./budget.component.css']
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class BudgetComponent implements OnInit, OnDestroy {
 
   // Arrays to store income and expense entries
@@ -21,8 +26,12 @@ export class BudgetComponent implements OnInit, OnDestroy {
   incomeSubscription: Subscription = new Subscription();
   expenseSubscription: Subscription = new Subscription();
 
+
+  totalYearlyIncome: number;
+  totalYearlyExpense: number;
+
   // Constructor to inject services (BudgetDataService and Router)
-  constructor(private budgetDataService: BudgetDataService, private router: Router) { }
+  constructor(public budgetDataService: BudgetDataService, private router: Router) { }
 
   // Lifecycle hook: Runs when the component is initialized
   ngOnInit(): void {
@@ -43,6 +52,18 @@ export class BudgetComponent implements OnInit, OnDestroy {
     // Initializing the incomeEntries and expenseEntries arrays with the initial data from the service
     this.incomeEntries = this.budgetDataService.incomeEntries;
     this.expenseEntries = this.budgetDataService.expenseEntries;
+
+    this.budgetDataService.getTotalYearlyIncome();
+    this.totalYearlyIncome = this.budgetDataService.totalYearlyIncome;
+    this.budgetDataService.totalYearlyIncomeSubject.subscribe((totalYearlyIncome) => {
+      this.totalYearlyIncome = totalYearlyIncome;
+    });
+
+    this.budgetDataService.getTotalYearlyExpense();
+    this.totalYearlyExpense = this.budgetDataService.totalYearlyExpense;
+    this.budgetDataService.totalYearlyExpenseSubject.subscribe((totalYearlyExpense) => {
+      this.totalYearlyExpense = totalYearlyExpense;
+    });
   }
 
   // Lifecycle hook: Runs when the component is destroyed
@@ -81,4 +102,5 @@ export class BudgetComponent implements OnInit, OnDestroy {
   getExpenseEntry(index: number) {
     return { ...this.expenseEntries[index] };
   }
+
 }

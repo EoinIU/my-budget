@@ -54,33 +54,14 @@ export class IncomeFormComponent implements OnInit {
 
   // Method called when the form is submitted
   onSubmit() {
-    // Declaring new property to hold yearly income value
-    let incomeYearlyVar: number = 0;
-
-    // if statement to determine what the frequency selected by the user is and calculating the yearly equivalent of the income
-    if (this.incomeForm.value.incomeFrequency === "Weekly") {
-      incomeYearlyVar = (this.incomeForm.value.incomeValue)*52;
-      console.log("Weekly income");
-    } else if (this.incomeForm.value.incomeFrequency === "Fortnightly") {
-      incomeYearlyVar = (this.incomeForm.value.incomeValue)*26;
-      console.log("Fortnightly income");
-    } else if (this.incomeForm.value.incomeFrequency === "Four-weekly") {
-      incomeYearlyVar = (this.incomeForm.value.incomeValue)*13;
-      console.log("Four-weekly income");
-    } else if (this.incomeForm.value.incomeFrequency === "Monthly") {
-      incomeYearlyVar = (this.incomeForm.value.incomeValue)*12;
-      console.log("Monthly income");
-    } else if (this.incomeForm.value.incomeFrequency === "Yearly") {
-      incomeYearlyVar = (this.incomeForm.value.incomeValue)*1;
-      console.log("Yearly income");
-    };
+    
     // Creating a new IncomeEntry object with the form values
     const newEntry = new IncomeEntry(
       1,
       this.incomeForm.value.incomeValue,
       this.incomeForm.value.incomeFrequency,
       this.incomeForm.value.incomeDescription,
-      incomeYearlyVar
+      0
     )
 
     // Checking if the form is in edit mode
@@ -91,6 +72,7 @@ export class IncomeFormComponent implements OnInit {
     } else {
       // If not in edit mode, add a new income entry using onAddIncomeEntry method in BudgetDataService
       this.budgetDataService.onAddIncomeEntry(newEntry);
+
     }
 
     // After submission, navigate back to the root page (assuming the root page displays the budget)
