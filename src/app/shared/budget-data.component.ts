@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({ providedIn: "root" })
 export class BudgetDataService {
 
+    // Declaring variables
     public maxIncomeId: number;
     public maxExpenseId: number;
     public totalYearlyIncome: number;
@@ -165,7 +166,7 @@ export class BudgetDataService {
         return this.incomeEntries.reduce((total, entry) => total + entry.incomeYearly, 0);
       }
     public calculateTotalYearlyExpense(): number {
-        // Calculate the sum of all incomeYearly values using reduce method
+        // Calculate the sum of all expenseYearly values using reduce method
         return this.expenseEntries.reduce((total, entry) => total + entry.expenseYearly, 0);
       }
     

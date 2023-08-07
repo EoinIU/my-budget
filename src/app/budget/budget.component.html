@@ -1,55 +1,63 @@
 <!-- This is the heading for the page, welcoming the user to their budget. -->
 <div class="container mt-3">
-    <h2>Welcome to your Budget</h2>
+    <h2 class="mt-4">Welcome to your Budget</h2>
 </div>
 
 <!-- A container-->
 <div class="container mt-5">
-    <h2>Summary</h2>
-    <div class="col-md-2 mt-3 mb-3"><label for="selectPeriod">Select Period:</label>
-        <select class="form-control" id="selectPeriod">
-            <option value="weekly">Weekly</option>
-            <option value="fortnightly">Fortnightly</option>
-            <option value="four-weekly">Four-weekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
-          </select>
-    </div>
-    
+    <h2 class="mb-3">Summary</h2>
+
     <!-- This div creates a row to display Totals side by side. -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr class="d-flex justify-content-between align-items-center mb-3">
+                        <td><b>Select Period:</b></td>
+                        <td class="text-success float-left"><select class="form-control" id="selectPeriod" (change)="onPeriodSelection($event)">
+                            <option value="weekly">Weekly</option>
+                            <option value="fortnightly">Fortnightly</option>
+                            <option value="four-weekly">Four-weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-success float-left"><b>Total Income:</b></td>
-                        <td class="float-right">€{{budgetDataService.totalYearlyIncome}}</td>
+                        <td class="float-right">€{{selectedPeriodIncome | number:'1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-danger float-left"><b>Total Expenses:</b></td>
-                        <td class="float-right">€{{budgetDataService.totalYearlyExpense}}</td>
+                        <td class="float-right">€{{selectedPeriodExpense | number:'1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-primary float-left"><b>Disposable Income:</b></td>
-                        <td class="float-right">€{{budgetDataService.totalYearlyIncome - budgetDataService.totalYearlyExpense}}</td>
+                        <td class="float-right">€{{disposableIncome | number:'1.2-2'}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <!-- The main container div that holds the budget-related content. -->
 <div class="container mt-5">
 
@@ -136,8 +144,8 @@
                         <td>{{expenseEntry.expenseDescription}}</td>
                         <!-- Displaying the expense value for the current entry. -->
                         <td>€{{expenseEntry.expenseValue}}</td>
-                         <!-- Displaying the income frequency for the current entry. -->
-                         <td>{{expenseEntry.expenseFrequency}}</td>
+                        <!-- Displaying the expense frequency for the current entry. -->
+                        <td>{{expenseEntry.expenseFrequency}}</td>
                         <!-- Buttons for editing and deleting the current expense entry. -->
                         <td>
                             <!-- The "Edit" button, which calls the expenseEdit() method with the index k. -->

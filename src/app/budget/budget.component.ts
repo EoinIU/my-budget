@@ -1,5 +1,5 @@
 // Importing required modules and components
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
 import { ExpenseEntry, IncomeEntry } from '../shared/budget-entry.model';
 import { BudgetDataService } from '../shared/budget-data.component';
 import { Observable, Subscription } from 'rxjs';
@@ -26,28 +26,46 @@ export class BudgetComponent implements OnInit, OnDestroy {
   incomeSubscription: Subscription = new Subscription();
   expenseSubscription: Subscription = new Subscription();
 
-
+  // Variables
+  currentlySelectedPeriod: string = "weekly";
   totalYearlyIncome: number;
   totalYearlyExpense: number;
+  selectedPeriodIncome: number;
+  selectedPeriodExpense: number;
+  disposableIncome: number = 0;
 
   // Constructor to inject services (BudgetDataService and Router)
   constructor(public budgetDataService: BudgetDataService, private router: Router) { }
 
   // Lifecycle hook: Runs when the component is initialized
   ngOnInit(): void {
-    // Subscribing to the income data stream using BehaviorSubject in BudgetDataService
-    // Whenever there is a change in income entries, this callback will update the component's incomeEntries
+    // Subscribing to the income and expense data streams
     this.budgetDataService.getIncomeEntries();
     this.incomeSubscription = this.budgetDataService.incomeSubject.subscribe(incomeEntries => {
       this.incomeEntries = incomeEntries;
     });
 
-    // Subscribing to the expense data stream using BehaviorSubject in BudgetDataService
-    // Whenever there is a change in expense entries, this callback will update the component's expenseEntries
     this.budgetDataService.getExpenseEntries();
     this.expenseSubscription = this.budgetDataService.expenseSubject.subscribe(expenseEntries => {
       this.expenseEntries = expenseEntries;
     });
+
+    // Getting total yearly values and calling the updateTotals function
+    this.budgetDataService.getTotalYearlyIncome();
+    this.budgetDataService.getTotalYearlyExpense();
+    this.updateTotals(this.currentlySelectedPeriod);
+
+    // Subscribing to the total yearly income and expense data streams
+    this.budgetDataService.totalYearlyIncomeSubject.subscribe((totalYearlyIncome) => {
+      this.totalYearlyIncome = totalYearlyIncome;
+      this.updateTotals(this.currentlySelectedPeriod); // Call the updateTotals method after totalYearlyIncome is initialized.
+    });
+
+    this.budgetDataService.totalYearlyExpenseSubject.subscribe((totalYearlyExpense) => {
+      this.totalYearlyExpense = totalYearlyExpense;
+      this.updateTotals(this.currentlySelectedPeriod); // Call the updateTotals method after totalYearlyExpense is initialized.
+    });
+
 
     // Initializing the incomeEntries and expenseEntries arrays with the initial data from the service
     this.incomeEntries = this.budgetDataService.incomeEntries;
@@ -101,6 +119,41 @@ export class BudgetComponent implements OnInit, OnDestroy {
   // Method to get a copy of the expense entry at the specified index
   getExpenseEntry(index: number) {
     return { ...this.expenseEntries[index] };
+  }
+
+  // Method to handle period selection
+  onPeriodSelection(event: any) {
+    const selectedPeriod = event.target.value;
+    this.updateTotals(selectedPeriod);
+    this.updateSelectedPeriod(selectedPeriod);
+  }
+
+  updateSelectedPeriod(selectedPeriod: any) {
+    this.currentlySelectedPeriod = selectedPeriod;
+  }
+
+  // Function to calculate and update the total values based on the selected period
+  private updateTotals(selectedPeriod: string) {
+    // Calculate selectedPeriodIncome and selectedPeriodExpense based on the selected period
+    if (selectedPeriod === 'weekly') {
+      this.selectedPeriodIncome = this.budgetDataService.totalYearlyIncome / 52;
+      this.selectedPeriodExpense = this.budgetDataService.totalYearlyExpense / 52;
+    } else if (selectedPeriod === 'fortnightly') {
+      this.selectedPeriodIncome = this.budgetDataService.totalYearlyIncome / 26;
+      this.selectedPeriodExpense = this.budgetDataService.totalYearlyExpense / 26;
+    } else if (selectedPeriod === 'four-weekly') {
+      this.selectedPeriodIncome = this.budgetDataService.totalYearlyIncome / 13;
+      this.selectedPeriodExpense = this.budgetDataService.totalYearlyExpense / 13;
+    } else if (selectedPeriod === 'monthly') {
+      this.selectedPeriodIncome = this.budgetDataService.totalYearlyIncome / 12;
+      this.selectedPeriodExpense = this.budgetDataService.totalYearlyExpense / 12;
+    } else if (selectedPeriod === 'yearly') {
+      this.selectedPeriodIncome = this.budgetDataService.totalYearlyIncome;
+      this.selectedPeriodExpense = this.budgetDataService.totalYearlyExpense;
+    }
+
+    // Calculate disposableIncome
+    this.disposableIncome = this.selectedPeriodIncome - this.selectedPeriodExpense;
   }
 
 }
