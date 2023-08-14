@@ -1,9 +1,9 @@
 # MyBudget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4. It also makes use of Node.js, Express.js and MongoDB.
 
 ## MongoDB Atlas
-This app uses MongoDB Atlas in order to persist user data. You should create a free account at https://cloud.mongodb.com and create a database under the free tier. To connect the app to your MongoDB Atlas database use the MongoDB driver for Node.js and copy and paste the connection string into the rest.js file in line 7.
+This app uses MongoDB Atlas in order to persist user data. You should create a free account at https://cloud.mongodb.com and create a database under the free tier. To connect the app to your MongoDB Atlas database use the MongoDB driver for Node.js and copy and paste the connection string into the rest.js file in line 7. Make sure to limit access to your IP address only in network settings in order to keep your data private.
 
 
 ## Development server
