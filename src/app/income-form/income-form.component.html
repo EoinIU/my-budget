@@ -26,23 +26,14 @@
                     <option *ngFor="let frequency of frequencyOptions" [value]="frequency">{{ frequency }}</option>
                 </select>
 
-                <!-- Alternative method for populating select options commented out -->
-                <!-- <label for="incomeFrequency">Frequency</label>
-                <select class="form-select" formControlName="incomeFrequency">
-                    <option value="" disabled selected>Select...</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="fortnightly">Fortnightly</option>
-                    <option value="four-weekly">Four Weekly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="yearly">Yearly</option>
-                </select> -->
-
             </div>
 
-            <!-- The submit button to add the income entry to the form.
+            <div>
+                <!-- The submit button to add the income entry to the form.
                  The [disabled] attribute is bound to the incomeForm's valid property to disable the button if the form is not valid. -->
-            <button [disabled]="!incomeForm.valid" class="btn btn-success">Submit</button>
+                <button [disabled]="!incomeForm.valid" class="btn btn-success">Submit</button>
+            </div>
+            
 
         </form>
 

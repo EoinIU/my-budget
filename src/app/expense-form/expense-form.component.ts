@@ -23,7 +23,7 @@ export class ExpenseFormComponent implements OnInit {
   expenseEntry: ExpenseEntry;
 
   // A variable to store the expense entry ID from the route parameter
-  paramId: number;
+  paramId: string;
 
   // An array of frequency options for the expense entry
   frequencyOptions: string[] = ["Weekly", "Fortnightly", "Four-weekly", "Monthly", "Yearly"];
@@ -37,7 +37,7 @@ export class ExpenseFormComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (paramMap.has('id')) {
         this.editMode = true;
-        this.paramId = +paramMap.get('id')!; // Converting the ID from string to a number using the + operator
+        this.paramId = paramMap.get('id')!;
         this.expenseEntry = this.budgetDataService.getExpenseEntry(this.paramId);
       } else {
         this.editMode = false;
@@ -56,7 +56,7 @@ export class ExpenseFormComponent implements OnInit {
   onSubmit() {
     // Creating a new ExpenseEntry object with the form values
     const newEntry = new ExpenseEntry(
-      1,
+      '',
       this.expenseForm.value.expenseValue,
       this.expenseForm.value.expenseFrequency,
       this.expenseForm.value.expenseDescription,
@@ -66,14 +66,14 @@ export class ExpenseFormComponent implements OnInit {
     // Checking if the form is in edit mode
     if (this.editMode) {
       // If in edit mode, update the existing expense entry using onUpdateExpenseEntry method in BudgetDataService
-      newEntry.id = +this.paramId;
+      newEntry.id = this.paramId;
       this.budgetDataService.onUpdateExpenseEntry(this.paramId, newEntry);
     } else {
       // If not in edit mode, add a new expense entry using onAddExpenseEntry method in BudgetDataService
       this.budgetDataService.onAddExpenseEntry(newEntry);
     }
 
-    // After submission, navigate back to the root page (assuming the root page displays the budget)
+    // After submission, navigate back to the root page
     this.router.navigateByUrl("");
   }
 }

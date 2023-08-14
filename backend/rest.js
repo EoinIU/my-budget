@@ -1,23 +1,33 @@
 // Import the 'express' module to create the application.
 const express = require('express');
 
+// Import Mongoose
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://TestUser:gqKXXvjj26x2ezLq@cluster01.mzxfj7b.mongodb.net/budgetdb?retryWrites=true&w=majority')
+    .then(() => {
+        console. log ( 'Connected to MongoDB')
+    })
+    .catch(() => {
+        console.log('Error connecting to MongoDe')
+    })
+
 // Import the 'body-parser' module to parse request bodies.
 const bodyParser = require('body-parser');
+
+//import income entry schema
+const IncomeEntryModel = require('./income-entry-schema');
+
+//import expense entry schema
+const ExpenseEntryModel = require('./expense-entry-schema');
 
 // Create the Express application.
 const app = express();
 
-// Sample data for income entries.
-const incomeEntries = [
-    { id: 1, incomeValue: 1000, incomeFrequency: "Weekly", incomeDescription: "Wages", incomeYearly: 52000 },
-    { id: 2, incomeValue: 200, incomeFrequency: "Weekly", incomeDescription: "Side Job", incomeYearly: 10400 }
-];
+// Declare income entries array.
+const incomeEntries = [];
 
-// Sample data for expense entries.
-const expenseEntries = [
-    { id: 1, expenseValue: "20", expenseFrequency: "Monthly", expenseDescription: "Phone Bill", expenseYearly: 240},
-    { id: 2, expenseValue: "50", expenseFrequency: "Weekly", expenseDescription: "Groceries", expenseYearly: 2600 }
-];
+// Declare expense entries array.
+const expenseEntries = [];
 
 
 // Middleware to parse incoming JSON data.
@@ -55,24 +65,27 @@ app.get('/max-expense-id', (req, res) => {
 
 // Route to remove an income entry by ID.
 app.delete('/remove-income-entry/:id', (req, res) => {
-    const index = incomeEntries.findIndex(el => el.id == req.params.id);
-    incomeEntries.splice(index, 1);
-    res.status(200).json({
-        message: 'Income Entry Deleted'
-    });
+    IncomeEntryModel.deleteOne({_id: req.params.id})
+    .then(() => {
+        res.status(200).json({
+            message: 'Income Entry Deleted'
+        })
+    })
 });
 
 // Route to remove an expense entry by ID.
 app.delete('/remove-expense-entry/:id', (req, res) => {
-    const index = expenseEntries.findIndex(el => el.id == req.params.id);
-    expenseEntries.splice(index, 1);
-    res.status(200).json({
-        message: 'Expense Entry Deleted'
-    });
+    ExpenseEntryModel.deleteOne({_id: req.params.id})
+    .then(() => {
+        res.status(200).json({
+            message: 'Expense Entry Deleted'
+        });
+    })
+    
 });
 
 // Route to update an income entry by ID.
-app.put('/update-income-entry/:id', (req, res) => {
+app.put('/update-income-entry/:id', (req, res) => { 
     // Calculate the incomeYearly based on the provided incomeValue and incomeFrequency
     const { incomeValue, incomeFrequency } = req.body;
     let incomeYearly = 0;
@@ -88,18 +101,20 @@ app.put('/update-income-entry/:id', (req, res) => {
     } else if (incomeFrequency === "Yearly") {
         incomeYearly = incomeValue;
     }
-
-    const index = incomeEntries.findIndex(el => el.id == req.params.id);
-    incomeEntries[index] = {
-        id: req.body.id,
+    const updatedIncome = new IncomeEntryModel({
+        _id: req.body.id,
         incomeValue: req.body.incomeValue,
         incomeFrequency: req.body.incomeFrequency,
         incomeDescription: req.body.incomeDescription,
-        incomeYearly: incomeYearly        
-    };
-    res.status(200).json({
-        message: "Income update completed"
-    });
+        incomeYearly: incomeYearly   
+    })
+    IncomeEntryModel.updateOne({_id: req.body.id}, updatedIncome)
+        .then(() => {
+            res.status(200).json({
+                message: "Income update completed"
+             });
+        })
+    
 });
 
 // Route to update an expense entry by ID.
@@ -119,17 +134,20 @@ app.put('/update-expense-entry/:id', (req, res) => {
     } else if (expenseFrequency === "Yearly") {
         expenseYearly = expenseValue;
     }
-    const index = expenseEntries.findIndex(el => el.id == req.params.id);
-    expenseEntries[index] = {
+
+    const updatedExpense = new ExpenseEntryModel({
         id: req.body.id,
         expenseValue: req.body.expenseValue,
         expenseFrequency: req.body.expenseFrequency,
         expenseDescription: req.body.expenseDescription,
         expenseYearly: expenseYearly
-    };
-    res.status(200).json({
-        message: "Expense update completed"
-    });
+    })
+    ExpenseEntryModel.updateOne({_id: req.body.id}, updatedExpense)
+        .then(() => {
+            res.status(200).json({
+                message: "Expense update completed"
+             });
+        })
 });
 
 // Route to add a new income entry.
@@ -150,15 +168,14 @@ app.post('/add-income-entry', (req, res) => {
         incomeYearly = incomeValue;
     }
 
-    // Add the new income entry to the incomeEntries array with the calculated incomeYearly
-    incomeEntries.push({
-        id: req.body.id,
+    const incomeEntry = new IncomeEntryModel({
         incomeValue: req.body.incomeValue,
         incomeFrequency: req.body.incomeFrequency,
         incomeDescription: req.body.incomeDescription,
         incomeYearly: incomeYearly
     });
-
+    incomeEntry.save();
+    console.log(incomeEntry);
     res.status(200).json({
         message: 'Income Entry submitted'
     });
@@ -182,14 +199,15 @@ app.post('/add-expense-entry', (req, res) => {
     } else if (expenseFrequency === "Yearly") {
         expenseYearly = expenseValue;
     }
-    expenseEntries.push({
-        id: req.body.id,
+
+    const expenseEntry = new ExpenseEntryModel({
         expenseValue: req.body.expenseValue,
         expenseFrequency: req.body.expenseFrequency,
         expenseDescription: req.body.expenseDescription,
         expenseYearly: expenseYearly
-
-    });
+    })
+    expenseEntry.save();
+    console.log(expenseEntry);
     res.status(200).json({
         message: 'Expense submitted'
     });
@@ -197,29 +215,55 @@ app.post('/add-expense-entry', (req, res) => {
 
 // Route to get all income entries.
 app.get('/income-entries', (req, res, next) => {
-    res.json({ 'incomeEntries': incomeEntries });
-});
+    IncomeEntryModel.find()
+        .then((incomeEntries) => {
+            res.json({'incomeEntries': incomeEntries})
+        })
+        .catch((error) =>{
+            console.log("Error fetching income entries")
+        })
+})
 
 // Route to get all expense entries.
 app.get('/expense-entries', (req, res, next) => {
-    res.json({ 'expenseEntries': expenseEntries });
+    ExpenseEntryModel.find()
+    .then((expenseEntries) => {
+        res.json({'expenseEntries': expenseEntries})
+    })
+    .catch((error) =>{
+        console.log("Error fetching expense entries")
+    })
 });
 
 // Route to get the yearly income total
 app.get('/total-yearly-income', (req, res) => {
-    // Calculate the sum of all incomeYearly values using the reduce method
-    const totalYearlyIncome = incomeEntries.reduce((total, entry) => total + entry.incomeYearly, 0);
-    // Send the total yearly income as the response
-    res.json({ totalYearlyIncome });
-  });
+    // Use the IncomeEntryModel to fetch all income entries from the database
+    IncomeEntryModel.find()
+        .then((incomeEntries) => {
+            // Calculate the sum of all incomeYearly values using the reduce method
+            const totalYearlyIncome = incomeEntries.reduce((total, entry) => total + entry.incomeYearly, 0);
+            // Send the total yearly income as the response
+            res.json({ totalYearlyIncome });
+        })
+        .catch((error) => {
+            // Handle any errors that occur during the database query
+            console.error("Error fetching income entries:", error);
+            res.status(500).json({ error: "Error fetching income entries" });
+        });
+});
+
 
 // Route to get the yearly expense total
 app.get('/total-yearly-expense', (req, res) => {
-    // Calculate the sum of all expenseYearly values using the reduce method
+    // Use ExpenseEntryModel to fetch all expense entries from the database
+    ExpenseEntryModel.find()
+    .then((expenseEntries) => {
+         // Calculate the sum of all expenseYearly values using the reduce method
     const totalYearlyExpense = expenseEntries.reduce((total, entry) => total + entry.expenseYearly, 0);
     // Send the total yearly income as the response
     res.json({ totalYearlyExpense });
-  });
+    })
+});
 
 // Export the Express application.
 module.exports = app;

@@ -23,7 +23,7 @@ export class IncomeFormComponent implements OnInit {
   incomeEntry: IncomeEntry;
 
   // A variable to store the income entry ID from the route parameter
-  paramId: number;
+  paramId: string;
 
   // An array of frequency options for the income entry
   frequencyOptions: string[] = ["Weekly", "Fortnightly", "Four-weekly", "Monthly", "Yearly"];
@@ -37,7 +37,7 @@ export class IncomeFormComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (paramMap.has('id')) {
         this.editMode = true;
-        this.paramId = +paramMap.get('id')!; // Converting the ID from string to a number using the + operator
+        this.paramId = paramMap.get('id')!;
         this.incomeEntry = this.budgetDataService.getIncomeEntry(this.paramId);
       } else {
         this.editMode = false;
@@ -57,7 +57,7 @@ export class IncomeFormComponent implements OnInit {
     
     // Creating a new IncomeEntry object with the form values
     const newEntry = new IncomeEntry(
-      1,
+      '',
       this.incomeForm.value.incomeValue,
       this.incomeForm.value.incomeFrequency,
       this.incomeForm.value.incomeDescription,
@@ -66,7 +66,7 @@ export class IncomeFormComponent implements OnInit {
 
     // Checking if the form is in edit mode
     if (this.editMode) {
-      newEntry.id = +this.paramId;
+      newEntry.id = this.paramId;
       // If in edit mode, update the existing income entry using onUpdateIncomeEntry method in BudgetDataService
       this.budgetDataService.onUpdateIncomeEntry(this.paramId, newEntry);
     } else {
@@ -75,7 +75,7 @@ export class IncomeFormComponent implements OnInit {
 
     }
 
-    // After submission, navigate back to the root page (assuming the root page displays the budget)
+    // After submission, navigate back to the root page
     this.router.navigateByUrl("");
   }
 }

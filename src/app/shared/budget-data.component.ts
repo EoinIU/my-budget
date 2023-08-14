@@ -1,7 +1,7 @@
 // Importing required modules and classes
 import { Injectable } from "@angular/core";
 import { ExpenseEntry, IncomeEntry } from "./budget-entry.model";
-import { Subject } from "rxjs";
+import { Subject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
 // Injectable decorator: Marks the class as injectable and registers it with the root injector
@@ -27,7 +27,7 @@ export class BudgetDataService {
     expenseEntries: ExpenseEntry[] = [];
 
     // Method to delete an income entry based on its index
-    incomeDelete(id: number) {
+    incomeDelete(id: string) {
         this.http.delete<{message: string}>('http://localhost:3000/remove-income-entry/' + id).subscribe((jsonData) => {
         console.log(jsonData);
         this.getIncomeEntries();
@@ -38,7 +38,7 @@ export class BudgetDataService {
     }
 
     // Method to delete an expense entry based on its index
-    expenseDelete(id: number) {
+    expenseDelete(id: string) {
         this.http.delete<{message: string}>('http://localhost:3000/remove-expense-entry/' + id).subscribe((jsonData) => {
         console.log(jsonData);
         this.getExpenseEntries();
@@ -50,7 +50,7 @@ export class BudgetDataService {
 
     // Method to add a new income entry
     onAddIncomeEntry(incomeEntry: IncomeEntry) {
-        this.http.get<{ maxIncomeId: number }>('http://localhost:3000/max-income-id').subscribe((jsonData) => {
+        this.http.get<{ maxIncomeId: string }>('http://localhost:3000/max-income-id').subscribe((jsonData) => {
           incomeEntry.id = jsonData.maxIncomeId + 1;
           this.http.post<{ message: string }>('http://localhost:3000/add-income-entry', incomeEntry).subscribe((jsonData) => {
             console.log(incomeEntry);
@@ -64,6 +64,7 @@ export class BudgetDataService {
             this.totalYearlyIncome = this.calculateTotalYearlyIncome();
             this.totalYearlyIncomeSubject.next(this.totalYearlyIncome); // Update the totalYearlyIncome value
             this.getTotalYearlyIncome();
+
           });
         });
       }
@@ -71,7 +72,7 @@ export class BudgetDataService {
 
     // Method to add a new expense entry
     onAddExpenseEntry(expenseEntry: ExpenseEntry) {
-        this.http.get<{ maxExpenseId: number }>('http://localhost:3000/max-expense-id').subscribe((jsonData) => {
+        this.http.get<{ maxExpenseId: string }>('http://localhost:3000/max-expense-id').subscribe((jsonData) => {
           expenseEntry.id = jsonData.maxExpenseId + 1;
           this.http.post<{ message: string }>('http://localhost:3000/add-expense-entry', expenseEntry).subscribe((jsonData) => {
             console.log(expenseEntry);
@@ -85,6 +86,7 @@ export class BudgetDataService {
             this.totalYearlyExpense = this.calculateTotalYearlyExpense();
             this.totalYearlyExpenseSubject.next(this.totalYearlyExpense); // Update the totalYearlyExpense value
             this.getTotalYearlyExpense();
+            console.log('get total yearly expense: ',this.getTotalYearlyExpense())
 
           });
         });
@@ -93,22 +95,52 @@ export class BudgetDataService {
 
     // Method to fetch income entries from the server
     getIncomeEntries(){
-        this.http.get<{incomeEntries: IncomeEntry[]}>('http://localhost:3000/income-entries').subscribe((jsonData) =>{
-        this.incomeEntries = jsonData.incomeEntries;
-        this.incomeSubject.next(this.incomeEntries);
+      this.http.get<{incomeEntries: any}>('http://localhost:3000/income-entries')
+      .pipe(map((responseData) =>{
+          return responseData.incomeEntries.map((entry: {
+            incomeValue: Number; incomeFrequency: String; incomeDescription: String; incomeYearly: Number; _id: String;
+          }) =>{
+            return{
+              incomeValue: entry.incomeValue,
+              incomeFrequency: entry.incomeFrequency,
+              incomeDescription: entry.incomeDescription,
+              incomeYearly: entry.incomeYearly,
+              id: entry._id
+            }
+          })
+      }))
+        .subscribe((updateResponse) =>{
+          this.incomeEntries = updateResponse;
+          this.incomeSubject.next(this.incomeEntries);
+          console.log("Income entries updated:", this.incomeEntries);
         })
     }
 
     // Method to fetch expense entries from the server
     getExpenseEntries(){
-        this.http.get<{expenseEntries: ExpenseEntry[]}>('http://localhost:3000/expense-entries').subscribe((jsonData) =>{
-        this.expenseEntries = jsonData.expenseEntries;
-        this.expenseSubject.next(this.expenseEntries);
-        })
+      this.http.get<{expenseEntries: any}>('http://localhost:3000/expense-entries')
+      .pipe(map((responseData) =>{
+          return responseData.expenseEntries.map((entry: {
+            expenseValue: Number; expenseFrequency: String; expenseDescription: String; expenseYearly: Number; _id: String;
+          }) =>{
+            return{
+              expenseValue: entry.expenseValue,
+              expenseFrequency: entry.expenseFrequency,
+              expenseDescription: entry.expenseDescription,
+              expenseYearly: entry.expenseYearly,
+              id: entry._id
+          }
+          })
+       }))
+      .subscribe((updateResponse) =>{
+      this.expenseEntries = updateResponse;
+      this.expenseSubject.next(this.expenseEntries);
+      console.log("Expense entries updated:", this.expenseEntries);
+      })
     }
 
     // Method to get a copy of a specific income entry based on its index
-    getIncomeEntry(id: number) {
+    getIncomeEntry(id: string) {
         const index = this.incomeEntries.findIndex(el =>{
         return el.id == id;
         })
@@ -116,7 +148,7 @@ export class BudgetDataService {
     }
 
     // Method to get a copy of a specific expense entry based on its index
-    getExpenseEntry(id: number) {
+    getExpenseEntry(id: string) {
         const index = this.expenseEntries.findIndex(el =>{
         return el.id == id;
         })
@@ -124,7 +156,7 @@ export class BudgetDataService {
     }
 
     // Method to update an existing income entry based on its index and the new entry data
-    onUpdateIncomeEntry(id: number, newEntry: IncomeEntry) {
+    onUpdateIncomeEntry(id: string, newEntry: IncomeEntry) {
         this.http.put<{message: string}>('http://localhost:3000/update-income-entry/' + id, newEntry).subscribe((jsonData) => {
         console.log(jsonData.message);
         this.getIncomeEntries();
@@ -135,7 +167,7 @@ export class BudgetDataService {
     }
 
     // Method to update an existing expense entry based on its index and the new entry data
-    onUpdateExpenseEntry(id: number, newEntry: ExpenseEntry) {
+    onUpdateExpenseEntry(id: string, newEntry: ExpenseEntry) {
         this.http.put<{message: string}>('http://localhost:3000/update-expense-entry/' + id, newEntry).subscribe((jsonData) => {
         console.log(jsonData.message);
         this.getExpenseEntries();
@@ -145,29 +177,30 @@ export class BudgetDataService {
         })
     }
 
+    // Method to fetch the total yearly income from the server
     getTotalYearlyIncome() {
         this.http.get<{ totalYearlyIncome: number }>('http://localhost:3000/total-yearly-income').subscribe((jsonData) => {
           this.totalYearlyIncome = jsonData.totalYearlyIncome;
-          // Notify subscribers about the updated totalYearlyIncome
           this.totalYearlyIncomeSubject.next(this.totalYearlyIncome);
         });
       }
     
+      // Method to fetch the total yearly expense from the server
       getTotalYearlyExpense() {
         this.http.get<{ totalYearlyExpense: number }>('http://localhost:3000/total-yearly-expense').subscribe((jsonData) => {
           this.totalYearlyExpense = jsonData.totalYearlyExpense;
-          // Notify subscribers about the updated totalYearlyIncome
           this.totalYearlyExpenseSubject.next(this.totalYearlyExpense);
         });
       }
     
+    // Method to calculate the sum of all incomeYearly values using reduce method
     public calculateTotalYearlyIncome(): number {
-        // Calculate the sum of all incomeYearly values using reduce method
         return this.incomeEntries.reduce((total, entry) => total + entry.incomeYearly, 0);
       }
+
+    // Mwthod to calculate the sum of all expenseYearly values using reduce method
     public calculateTotalYearlyExpense(): number {
-        // Calculate the sum of all expenseYearly values using reduce method
-        return this.expenseEntries.reduce((total, entry) => total + entry.expenseYearly, 0);
+        return this.expenseEntries.reduce((total, entry) => total + entry.expenseYearly, 0);    
       }
     
 }

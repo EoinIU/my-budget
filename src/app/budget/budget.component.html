@@ -3,7 +3,7 @@
     <h2 class="mt-4">Welcome to your Budget</h2>
 </div>
 
-<!-- A container-->
+<!-- A container -->
 <div class="container mt-5">
     <h2 class="mb-3">Summary</h2>
 
@@ -12,22 +12,28 @@
         <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
+                    <!-- Table row for selecting the period. -->
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td><b>Select Period:</b></td>
-                        <td class="text-success float-left"><select class="form-control" id="selectPeriod" (change)="onPeriodSelection($event)">
-                            <option value="weekly">Weekly</option>
-                            <option value="fortnightly">Fortnightly</option>
-                            <option value="four-weekly">Four-weekly</option>
-                            <option value="monthly">Monthly</option>
-                            <option value="yearly">Yearly</option>
-                        </select></td>
+                        <td class="text-success float-left">
+                            <!-- Dropdown for selecting the period, triggers onPeriodSelection() on change. -->
+                            <select class="form-control" id="selectPeriod" (change)="onPeriodSelection($event)">
+                                <option value="weekly">Weekly</option>
+                                <option value="fortnightly">Fortnightly</option>
+                                <option value="four-weekly">Four-weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- Columns for Total Income, Total Expenses, and Disposable Income -->
         <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
+                    <!-- Table row for Total Income. -->
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-success float-left"><b>Total Income:</b></td>
                         <td class="float-right">€{{selectedPeriodIncome | number:'1.2-2'}}</td>
@@ -38,6 +44,7 @@
         <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
+                    <!-- Table row for Total Expenses. -->
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-danger float-left"><b>Total Expenses:</b></td>
                         <td class="float-right">€{{selectedPeriodExpense | number:'1.2-2'}}</td>
@@ -48,6 +55,7 @@
         <div class="col-md-3">
             <table class="table table-borderless">
                 <tbody>
+                    <!-- Table row for Disposable Income. -->
                     <tr class="d-flex justify-content-between align-items-center mb-3">
                         <td class="text-primary float-left"><b>Disposable Income:</b></td>
                         <td class="float-right">€{{disposableIncome | number:'1.2-2'}}</td>
@@ -66,19 +74,17 @@
 
         <!-- The first column, dedicated to displaying income-related information. -->
         <div class="col-md-6">
-
-            <!-- A flexbox container to align the heading and the "Add Income" button. -->
+            <!-- Flexbox container for aligning heading and "Add Income" button. -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <!-- The heading for the income section. -->
+                <!-- Heading for the income section. -->
                 <h3 class="float-left">Income</h3>
-
-                <!-- The "Add Income" button, which navigates to the "income-entry" route. -->
+                <!-- "Add Income" button with router link to "income-entry" route. -->
                 <a routerLink="income-entry">
                     <button type="button" class="btn btn-success">Add Income</button>
                 </a>
             </div>
 
-            <!-- A table to display the list of income entries. -->
+            <!-- Table to display income entries. -->
             <table id="incomeTable" class="table table-bordered">
                 <thead>
                     <!-- Table header row with column names. -->
@@ -89,21 +95,16 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <!-- Using Angular's *ngFor directive to loop through incomeEntries and display each entry. -->
                     <tr *ngFor="let incomeEntry of incomeEntries; let i = index">
-                        <!-- Displaying the income description for the current entry. -->
+                        <!-- Displaying income entry details in respective columns. -->
                         <td>{{incomeEntry.incomeDescription}}</td>
-                        <!-- Displaying the income value for the current entry. -->
                         <td>€{{incomeEntry.incomeValue}}</td>
-                        <!-- Displaying the income frequency for the current entry. -->
                         <td>{{incomeEntry.incomeFrequency}}</td>
                         <!-- Buttons for editing and deleting the current income entry. -->
                         <td>
-                            <!-- The "Edit" button, which calls the incomeEdit() method with the index i. -->
                             <button (click)="incomeEdit(incomeEntry.id)" type="button" class="btn btn-outline-primary">Edit</button>
-                            <!-- The "Delete" button, which calls the incomeDelete() method with the index i. -->
                             <button (click)="incomeDelete(incomeEntry.id)" type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
                     </tr>
@@ -113,19 +114,17 @@
 
         <!-- The second column, dedicated to displaying expense-related information. -->
         <div class="col-md-6">
-
-            <!-- A flexbox container to align the heading and the "Add Expense" button. -->
+            <!-- Flexbox container for aligning heading and "Add Expense" button. -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <!-- The heading for the expense section. -->
+                <!-- Heading for the expense section. -->
                 <h3 class="float-left">Expenses</h3>
-
-                <!-- The "Add Expense" button, which navigates to the "expense-entry" route. -->
+                <!-- "Add Expense" button with router link to "expense-entry" route. -->
                 <a routerLink="expense-entry">
                     <button type="button" class="btn btn-danger">Add Expense</button>
                 </a>
             </div>
 
-            <!-- A table to display the list of expense entries. -->
+            <!-- Table to display expense entries. -->
             <table id="expenseTable" class="table table-bordered">
                 <thead>
                     <!-- Table header row with column names. -->
@@ -136,21 +135,16 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <!-- Using Angular's *ngFor directive to loop through expenseEntries and display each entry. -->
                     <tr *ngFor="let expenseEntry of expenseEntries; let k = index">
-                        <!-- Displaying the expense description for the current entry. -->
+                        <!-- Displaying expense entry details in respective columns. -->
                         <td>{{expenseEntry.expenseDescription}}</td>
-                        <!-- Displaying the expense value for the current entry. -->
                         <td>€{{expenseEntry.expenseValue}}</td>
-                        <!-- Displaying the expense frequency for the current entry. -->
                         <td>{{expenseEntry.expenseFrequency}}</td>
                         <!-- Buttons for editing and deleting the current expense entry. -->
                         <td>
-                            <!-- The "Edit" button, which calls the expenseEdit() method with the index k. -->
                             <button (click)="expenseEdit(expenseEntry.id)" type="button" class="btn btn-outline-primary">Edit</button>
-                            <!-- The "Delete" button, which calls the expenseDelete() method with the index k. -->
                             <button (click)="expenseDelete(expenseEntry.id)" type="button" class="btn btn-outline-danger">Delete</button>
                         </td>
                     </tr>

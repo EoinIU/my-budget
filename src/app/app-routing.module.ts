@@ -9,7 +9,8 @@ const routes: Routes = [
   {path: "income-entry", component: IncomeFormComponent},
   {path: "expense-entry", component: ExpenseFormComponent},
   {path:"incomeEdit/:id", component: IncomeFormComponent},
-  {path:"expenseEdit/:id", component: ExpenseFormComponent}
+  {path:"expenseEdit/:id", component: ExpenseFormComponent},
+
 ];
 
 @NgModule({

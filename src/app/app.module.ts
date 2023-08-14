@@ -9,6 +9,7 @@ import { IncomeFormComponent } from './income-form/income-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import {HttpClientModule} from '@angular/common/http';
+import { AboutPageComponent } from './about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {HttpClientModule} from '@angular/common/http';
     BudgetComponent,
     IncomeFormComponent,
     ExpenseFormComponent,
+    AboutPageComponent,
     ],
   imports: [
     BrowserModule,
