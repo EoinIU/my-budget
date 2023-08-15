@@ -3,9 +3,9 @@ const express = require('express');
 
 // Import Mongoose
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://TestUser:gqKXXvjj26x2ezLq@cluster01.mzxfj7b.mongodb.net/budgetdb?retryWrites=true&w=majority')
+mongoose.connect(/*PASTE CONNECTION STRING HERE*/)
     .then(() => {
-        console. log ( 'Connected to MongoDB')
+        console. log ('Connected to MongoDB')
     })
     .catch(() => {
         console.log('Error connecting to MongoDe')
