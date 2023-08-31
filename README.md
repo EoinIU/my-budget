@@ -1,31 +1,77 @@
 # MyBudget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4. It also makes use of Node.js, Express.js and MongoDB.
+MyBudget is an app that helps users keep track of their regular income and expenses, allowing them to better understand their financial situation and empowering them to make better financial decisions.
 
-## MongoDB Atlas
-This app uses MongoDB Atlas in order to persist user data. You should create a free account at https://cloud.mongodb.com and create a database under the free tier. To connect the app to your MongoDB Atlas database use the MongoDB driver for Node.js and copy and paste the connection string into the rest.js file in line 7. Make sure to restrics access to your IP address only in network settings for added security.
+# How to Install and Run the Project
+
+## Prerequisites
+
+### Node.js
+
+Download and install the latest version of Node.js: https://nodejs.org/en/download
+
+### Angular CLI
+
+Install the Angular CLI globally from the terminal with: **npm install -g @angular/cli**.
+
+### MongoDB Atlas
+
+This app uses MongoDB Atlas in order to persist user data. You should create an account at: https://cloud.mongodb.com and create a database under the free tier.
+
+## Installation steps
 
 
-## Development server
+### 1. Downlaod source code
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Download the source code from the GitHub repository, unzip the file, and navigate to the directory in the termnal.
 
-## Code scaffolding
+### 2. Download and Install npm Packages
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run the command: **npm install**
 
-## Build
+### 3. Connect MongoDB Atlas
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To connect the app to your MongoDB Atlas database use the MongoDB driver for Node.js and copy and paste the connection string into line 7 in the **backend/rest.js** file, as follows:
 
-## Running unit tests
+Log in to your MongoDB Atlas account and under your database deployments click "Connect" on your desired database.
+<br>
+<br>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<img width="714" alt="Screenshot 2023-08-31 at 10 22 38" src="https://github.com/EoinIU/my-budget/assets/140261376/2b1a69cb-2e1a-45d7-9f16-270849306141">
 
-## Further help
+<br>
+<br>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+Next click "Drivers" under "Connect to your application".
+ 
+
+<img width="774" alt="Screenshot 2023-08-31 at 10 22 54" src="https://github.com/EoinIU/my-budget/assets/140261376/b2e5fa58-14ff-4523-b8d1-1140220e9602">
+
+<br>
+<br>
+
+In the terminal run the command: **npm install mongodb**
+
+Finally, copy and paste your connection string into line 7 of the file **backend/rest.js** - making sure to replace "<password>" with your password.
+<br>
+
+
+### 4. Start the Node.js server
+
+In the terminal run the command: **node backend/server.js** - You should get a message saying "Connected to MongoDB". If you get a message saying "Error connecting to MongoDB" make sure that your IP address is not being blocked by MongoBD's IP restriction and try again.
+
+### 5. Run Application
+
+In the terminal run the command: **ng serve**
+
+To see the application in the browser, go to http://localhost:4200/
+
+## Notes
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+
+
+
