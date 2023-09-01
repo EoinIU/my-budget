@@ -83,3 +83,7 @@ Assuming you have correctly entered all of your regular income and expenses into
 ## Notes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+
+## Lisence
+
+GNU GENERAL PUBLIC LICENSE v3.0
