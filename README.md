@@ -42,7 +42,7 @@ Next, click "Drivers" under "Connect to your application".
 
 In the terminal, run the command: **npm install mongodb**
 
-Finally, copy and paste your connection string into line 7 of the file **backend/rest.js** - making sure to replace "<password>" with your password.
+Finally, copy and paste your connection string into line 7 of the file **backend/rest.js** - making sure to replace "password" with your password.
 
 ### 4. Start the Node.js server
 
