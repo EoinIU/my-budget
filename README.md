@@ -66,11 +66,11 @@ The app is split into two main sections: the Summary Section, and the Budget Sec
 
 ## Adding Income and Expenses
 
-Click the "Add Income" or "Add Expense" button to add a new payment. This will open a form where you can add the description, value, and frequency for the payment. Once you have added these values, click the submit button. This will bring you back to the main app page, and the payment you have just added will appear in the respective income or expense section of the budget section.
+Click the "Add Income" or "Add Expense" button to add a new payment. This will open a form where you can add the description, value, and frequency for the payment. Once you have added these values, click the submit button. This will bring you back to the main app page, and the payment you have just added will appear in the respective income or expense section.
 
 ## Editing or Deleting Budget Entries
 
-If you wish to edit or delete one of the payments you have added to the budget, you can click the "Edit" or "Delete" button to the right of the payment in question. Clicking "Edit" will open the same form that was used to add the payment initially; you can now edit the values and click submit when finished. Clicking "Delete" will remove the payment in question.
+If you wish to edit or delete one of the payments, you can click the "Edit" or "Delete" button to the right of the payment in question. Clicking "Edit" will open the same form that was used to add the payment initially; you can now edit the values and click submit when finished. Clicking "Delete" will remove the payment in question.
 
 ## Using the Budget Summary
 
